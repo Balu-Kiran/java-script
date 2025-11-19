@@ -57,7 +57,7 @@ jobs:
         run: |
           curl -f -u "$NEXUS_USR:$NEXUS_PSW" \
             --upload-file javanew-${{ github.run_number }}.zip \
-            http://16.170.207.67:8081/repository/npm-releases/javanew-${{ github.run_number }}.zip
+            http://16.16.146.109:8081/repository/npm-releases/javanew-${{ github.run_number }}.zip
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3

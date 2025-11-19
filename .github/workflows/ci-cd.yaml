@@ -37,6 +37,13 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR }}
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=react-app
+            -Dsonar.projectName=react-app
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**,**/build/**
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }}
 
       - name: Create ZIP archive
         run: |

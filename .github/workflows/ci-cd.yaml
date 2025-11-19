@@ -35,8 +35,8 @@ jobs:
       - name: Run SonarQube analysis
         uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ SONAR }}
+          SONAR_HOST_URL: ${{ http://16.16.146.109:9000 }}
 
       - name: Create ZIP archive
         run: |

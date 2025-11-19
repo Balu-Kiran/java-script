@@ -16,26 +16,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # 1️⃣ Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # 2️⃣ Setup Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
 
-      # Step 3: Install dependencies
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Build React app
+      # 4️⃣ Build React app
       - name: Build React app
         run: npm run build
 
-      # Step 5: Run SonarQube analysis
+      # 5️⃣ Run SonarQube analysis
       - name: Run SonarQube analysis
         uses: sonarsource/sonarqube-scan-action@master
         env:
@@ -49,13 +49,13 @@ jobs:
             -Dsonar.exclusions=**/node_modules/**,**/build/**
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }}
 
-      # Step 6: Create ZIP artifact
+      # 6️⃣ Create ZIP artifact
       - name: Create ZIP archive
         run: |
           npm install --save-dev bestzip
           npx bestzip javanew-${{ github.run_number }}.zip build/*
 
-      # Step 7: Upload ZIP to Nexus RAW repository
+      # 7️⃣ Upload ZIP to Nexus RAW repository
       - name: Upload to Nexus
         env:
           NEXUS_USR: ${{ secrets.NEXUSUNAME }}
@@ -65,7 +65,7 @@ jobs:
             --upload-file javanew-${{ github.run_number }}.zip \
             http://16.16.146.109:8081/repository/raw-releases/javanew-${{ github.run_number }}.zip
 
-      # Step 8: Download artifact for Docker build
+      # 8️⃣ Download artifact for Docker build
       - name: Download artifact from Nexus
         env:
           NEXUS_USR: ${{ secrets.NEXUSUNAME }}
@@ -75,14 +75,14 @@ jobs:
             -o react-build.zip \
             http://16.16.146.109:8081/repository/raw-releases/javanew-${{ github.run_number }}.zip
 
-      # Step 9: Log in to Docker Hub
+      # 9️⃣ Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DCOKERUNAME }}
           password: ${{ secrets.DOCKERPW }}
 
-      # Step 10: Build and push Docker image
+      # 🔟 Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:

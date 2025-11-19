@@ -9,7 +9,7 @@ on:
 env:
   DOCKER_IMAGE_BASE: "balasurya3777/java-script"
   NEXUS_URL: ":8081"
-  NEXUS_REPO: "npm-releases"
+  NEXUS_REPO: "raw-releases"
   SONAR_HOST_URL: "http://16.16.146.109:9000"
 
 jobs:
@@ -50,14 +50,14 @@ jobs:
           npm install --save-dev bestzip
           npx bestzip javanew-${{ github.run_number }}.zip build/*
 
-      - name: Upload to Nexus
+      - name: Upload to Nexus RAW repository
         env:
           NEXUS_USR: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PSW: ${{ secrets.NEXUS_PASSWORD }}
         run: |
           curl -f -u "$NEXUS_USR:$NEXUS_PSW" \
             --upload-file javanew-${{ github.run_number }}.zip \
-            http://16.16.146.109:8081/repository/npm-releases/javanew-${{ github.run_number }}.zip
+            http://16.16.146.109:8081/repository/raw-releases/javanew-${{ github.run_number }}.zip
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -72,4 +72,4 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKER_IMAGE_BASE }}:${{ github.run_number }}
-            ${{ env.DOCKER_IMAGE_BASE }}:latest
+            ${{ env.DOORKER_IMAGE_BASE }}:latest

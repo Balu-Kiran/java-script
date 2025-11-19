@@ -10,7 +10,7 @@ env:
   DOCKER_IMAGE_BASE: "balasurya3777/java-script"
   NEXUS_URL: ":8081"
   NEXUS_REPO: "npm-releases"
-  SONAR_HOST_URL: "http://16.170.207.67:9000"
+  SONAR_HOST_URL: "http://16.16.146.109:9000"
 
 jobs:
   build:
@@ -36,7 +36,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR }}
-          SONAR_HOST_URL: "http://16.16.146.109:9000" 
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
       - name: Create ZIP archive
         run: |
